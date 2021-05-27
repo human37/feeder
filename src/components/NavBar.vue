@@ -1,17 +1,18 @@
 <template>
-  <v-card class="overflow-hidden">
-    <v-app-bar dark hide-on-scroll flat >
-      <v-app-bar-nav-icon></v-app-bar-nav-icon>
-      <v-toolbar-title>Simple RSS Reader</v-toolbar-title>
-      <v-spacer></v-spacer>
-      <v-btn icon>
-        <v-icon>mdi-account-circle</v-icon>
-      </v-btn>
-      <v-btn icon>
-        <v-icon>mdi-dots-vertical</v-icon>
-      </v-btn>
-    </v-app-bar>
-  </v-card>
+  <v-app>
+    <v-navigation-drawer v-model="drawer" app mini-variant>
+      <v-avatar
+        v-for="n in 6"
+        :key="n"
+        :color="`grey ${n === 1 ? 'darken' : 'lighten'}-1`"
+        :size="n === 1 ? 36 : 20"
+        class="d-block text-center mx-auto mb-9"
+      ></v-avatar>
+    </v-navigation-drawer>
+    <v-main>
+      <!--  -->
+    </v-main>
+  </v-app>
 </template>
 
 <script>

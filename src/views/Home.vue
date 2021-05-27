@@ -1,9 +1,6 @@
 <template>
   <div>
-    <header></header>
-    <main>
       <NavBar />
-    </main>
   </div>
 </template>
 
