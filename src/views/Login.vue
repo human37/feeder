@@ -1,21 +1,21 @@
 <template>
   <div>
-    <header></header>
-    <main>
-      <NavBar />
-      <p>this is my about page.</p>
-    </main>
+    <SignUp />
+    <v-app>
+    <NavBar />
+    </v-app>
   </div>
 </template>
 
 <script>
 import NavBar from "../components/NavBar.vue";
+import SignUp from "../components/SignUp.vue";
 
 export default {
-  name: "About",
+  name: "Home",
   components: {
-    NavBar,
+    SignUp,
+    NavBar
   },
 };
 </script>
-
