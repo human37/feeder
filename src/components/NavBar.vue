@@ -49,21 +49,20 @@
 </template>
 
 <script>
-import SideBar from "./SideBar.vue";
-let Parser = require("rss-parser");
+import SideBar from './SideBar.vue';
+let Parser = require('rss-parser');
 let parser = new Parser();
 export default {
-  name: "NavBar",
+  name: 'NavBar',
   components: {
     SideBar,
   },
   methods: {
     getFeed() {
-      let feed = parser.parseURL("https://www.reddit.com/.rss");
+      let feed = parser.parseURL('https://www.reddit.com/.rss');
       console.log(feed.title);
-
       feed.items.forEach((item) => {
-        console.log(item.title + ":" + item.link);
+        console.log(item.title + ':' + item.link);
       });
     },
   },

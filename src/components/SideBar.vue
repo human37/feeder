@@ -10,7 +10,7 @@
       <v-list-item-content>
         <v-list-item-subtitle>All</v-list-item-subtitle>
       </v-list-item-content>
-      <v-switch inset color="primary"></v-switch>
+      <v-switch inset></v-switch>
     </v-list-item>
     <v-divider></v-divider>
     <v-list>
@@ -21,7 +21,7 @@
         <v-list-item-content>
           <v-list-item-title>{{ item.title }}</v-list-item-title>
         </v-list-item-content>
-        <v-switch inset color="primary"></v-switch>
+        <v-switch inset></v-switch>
       </v-list-item>
     </v-list>
   </div>

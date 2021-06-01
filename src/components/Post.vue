@@ -1,11 +1,12 @@
 <template>
-  <v-row dense align="center" justify="center" style="padding:10px">
-    <v-card min-height="150px" min-width="80vw" style="padding:10px">
+  <v-row dense id="row" justify="center">
+    <v-card id="card">
       <v-card-title>
         {{ title }}
         <v-spacer></v-spacer>
         <v-icon>mdi-twitter</v-icon>
       </v-card-title>
+      <v-card-subtitle> {{ sub_title }} </v-card-subtitle>
       <v-card-text>
         {{ content }}
       </v-card-text>
@@ -16,11 +17,25 @@
 <script>
 export default {
   name: "Post",
-  data: () => ({
-    title: "How to Know If Your Android Phone Is Victim of Malicious Acts",
-    sub_title: "social",
-    content:
-      "Androids highly customizable ecosystem makes it more prone to malware and viruses. Android malware can do much harm to your smartphone like stealing personal data, sending text messages to premium numbers, downloading infected apps, and using the phone for launching DDoS attacks. If you suspect that your smartphone is being used for malicious acts, or",
-  }),
+  props: {
+    title: String,
+    sub_title: String,
+    content: String,
+  },
 };
 </script>
+
+<style scoped>
+#row {
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-bottom: 10px;
+  min-height: 150px;
+  max-height: 250px;
+}
+#card {
+  padding: 10px;
+  min-height: inherit;
+  max-height: inherit;
+}
+</style>
