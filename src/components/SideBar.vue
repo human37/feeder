@@ -33,7 +33,7 @@ export default {
   props: {
     items: {
       type: Array,
-    }
+    },
   },
 };
 </script>

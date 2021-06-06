@@ -8,5 +8,13 @@ Vue.config.productionTip = false;
 new Vue({
   vuetify,
   router,
+  data() {
+    return {
+      myData: [{
+        "title": "reddit",
+        "icon": "mdi-reddit"
+      }]
+    };
+  },
   render: h => h(App)
 }).$mount('#app');

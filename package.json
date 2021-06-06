@@ -4,11 +4,14 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
+    "lambda": "netlify-lambda serve lambda",
     "build": "vue-cli-service build",
-    "lint": "eslint src/"
+    "lint": "eslint src/ lambda/ --fix"
   },
   "dependencies": {
+    "axios": "^0.21.1",
     "core-js": "^3.6.5",
+    "netlify-lambda": "^2.0.8",
     "rss-parser": "^3.12.0",
     "vue": "^2.6.11",
     "vue-router": "^3.2.0",
