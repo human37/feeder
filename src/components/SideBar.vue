@@ -8,7 +8,7 @@
     <v-divider></v-divider>
     <v-list-item>
       <v-list-item-content>
-        <v-list-item-subtitle>All</v-list-item-subtitle>
+        <v-list-item-title>All</v-list-item-title>
       </v-list-item-content>
       <v-switch inset></v-switch>
     </v-list-item>
@@ -30,13 +30,10 @@
 <script>
 export default {
   name: "SideBar",
-  data: () => ({
-    items: [
-      { title: "Twitter", icon: "mdi-twitter" },
-      { title: "Reddit", icon: "mdi-reddit" },
-      { title: "Jira", icon: "mdi-jira" },
-      { title: "Medium", icon: "mdi-post" },
-    ],
-  }),
+  props: {
+    items: {
+      type: Array,
+    }
+  },
 };
 </script>

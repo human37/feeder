@@ -34,7 +34,6 @@ export default {
   max-height: 250px;
 }
 #card {
-  padding: 10px;
   min-height: inherit;
   max-height: inherit;
 }

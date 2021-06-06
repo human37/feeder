@@ -1,10 +1,10 @@
 <template>
   <v-app>
     <v-navigation-drawer v-model="drawer" app temporary>
-      <SideBar />
+      <SideBar :items="items_data" />
     </v-navigation-drawer>
     <v-app-bar app dense>
-      <v-app-bar-nav-icon @click="drawer=!drawer"></v-app-bar-nav-icon>
+      <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
       <v-app-bar-title>simple RSS</v-app-bar-title>
       <v-spacer></v-spacer>
       <v-tooltip bottom>
@@ -49,25 +49,30 @@
 </template>
 
 <script>
-import SideBar from './SideBar.vue';
-let Parser = require('rss-parser');
+import SideBar from "./SideBar.vue";
+let Parser = require("rss-parser");
 let parser = new Parser();
 export default {
-  name: 'NavBar',
+  name: "NavBar",
   components: {
     SideBar,
   },
   methods: {
     getFeed() {
-      let feed = parser.parseURL('https://www.reddit.com/.rss');
+      let feed = parser.parseURL("https://www.reddit.com/.rss");
       console.log(feed.title);
       feed.items.forEach((item) => {
-        console.log(item.title + ':' + item.link);
+        console.log(item.title + ":" + item.link);
       });
     },
   },
   data: () => ({
     drawer: null,
+    items_data: [
+      { title: "Reddit", icon: "mdi-reddit" },
+      { title: "Jira", icon: "mdi-jira" },
+      { title: "Facebook", icon: "mdi-facebook" },
+    ],
   }),
 };
 </script>
