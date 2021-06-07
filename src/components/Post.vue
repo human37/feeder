@@ -1,6 +1,6 @@
 <template>
   <v-row dense id="row" justify="center">
-    <v-card id="card">
+    <v-card outlined tile id="card">
       <v-card-title>
         {{ title }}
         <v-spacer></v-spacer>
@@ -25,16 +25,16 @@ export default {
   methods: {
     span(text) {
       return "<span>" + text + "</span>";
-    }
-  }
+    },
+  },
 };
 </script>
 
 <style scoped>
 #row {
-  padding-left: 10px;
-  padding-right: 10px;
-  padding-bottom: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-bottom: 20px;
   min-height: 150px;
 }
 #card {

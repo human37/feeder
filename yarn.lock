@@ -8648,6 +8648,11 @@ vue-template-es2015-compiler@^1.9.0:
   resolved "https://registry.npmjs.org/vue-template-es2015-compiler/-/vue-template-es2015-compiler-1.9.1.tgz"
   integrity sha512-4gDntzrifFnCEvyoO8PqyJDmguXgVPxKiIxrBKjIowvL9l+N66196+72XVYR8BBf1Uv1Fgt3bGevJ+sEmxfZzw==
 
+vue-web-storage@^6.1.0:
+  version "6.1.0"
+  resolved "https://registry.yarnpkg.com/vue-web-storage/-/vue-web-storage-6.1.0.tgz#12aba7d09844f429fa0cffc9e11524e99f4ffdfe"
+  integrity sha512-Qsa6QkUyGP+Tj0oxLRc6vEATv6axY89LbwfX8eaMM3i7K/Nl9m0NTELtNp0s8Xhg9F0SkeEP4NC3+LQL3ygMQw==
+
 vue@^2.6.11:
   version "2.6.12"
   resolved "https://registry.npmjs.org/vue/-/vue-2.6.12.tgz"

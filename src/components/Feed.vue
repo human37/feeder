@@ -1,12 +1,19 @@
 <template>
   <v-app id="feed">
-    <Post
-      v-for="post in posts"
-      :key="post.title"
-      :title="post.title"
-      :sub_title="post.sub_title"
-      :content="post.content"
-    />
+    <div v-if="refreshing" id="loading-circle">
+      <v-progress-circular
+        indeterminate
+      ></v-progress-circular>
+    </div>
+    <div v-else>
+      <Post
+        v-for="post in posts"
+        :key="post.title"
+        :title="post.title"
+        :sub_title="post.date"
+        :content="post.content"
+      />
+    </div>
   </v-app>
 </template>
 
@@ -16,6 +23,7 @@ export default {
   name: "Feed",
   props: {
     posts: Array,
+    refreshing: Boolean,
   },
   components: {
     Post,
@@ -26,6 +34,9 @@ export default {
 
 <style scoped>
 #feed {
-  padding-top: 60px;
+  padding-top: 70px;
+}
+#loading-circle {
+  margin: auto;
 }
 </style>

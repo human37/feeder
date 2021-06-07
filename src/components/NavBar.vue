@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-app>
-      <v-navigation-drawer v-model="drawer" app temporary>
+      <v-navigation-drawer v-model="drawer" temporary app>
         <SideBar :items="feeds" />
       </v-navigation-drawer>
       <v-app-bar app dense>
@@ -10,12 +10,27 @@
         <v-spacer></v-spacer>
         <v-tooltip bottom>
           <template v-slot:activator="{ on, attrs }">
-            <v-btn icon v-bind="attrs" v-on="on">
+            <v-btn @click="modal = true" icon v-bind="attrs" v-on="on">
               <v-icon>mdi-rss</v-icon>
             </v-btn>
           </template>
           <span>Add RSS Feed</span>
         </v-tooltip>
+        <v-dialog v-model="modal" max-width="490">
+          <v-card id="add-feed-modal">
+            <v-text-field
+              label="Enter your RSS feed URL"
+              :value="input_url"
+              @change="input_url = $event"
+              required
+            ></v-text-field>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn text @click="modal = false"> Cancel </v-btn>
+              <v-btn text @click="storeURL"> Add </v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
         <v-tooltip bottom>
           <template v-slot:activator="{ on, attrs }">
             <v-btn @click="refreshFeed" icon v-bind="attrs" v-on="on">
@@ -54,7 +69,7 @@
           <span>Create Account or Login</span>
         </v-tooltip>
       </v-app-bar>
-      <Feed :posts="posts"/>
+      <Feed :posts="posts" :refreshing="refreshing" />
     </v-app>
   </div>
 </template>
@@ -71,24 +86,61 @@ export default {
   },
   data: () => ({
     drawer: null,
-    posts: [{ title: null, sub_title: null, content: null }],
+    modal: false,
+    input_url: null,
+    refreshing: false,
+    posts: [{ title: null, date: null, content: null }],
     feeds: [{ title: "Reddit", icon: "mdi-reddit" }],
   }),
   methods: {
-    async refreshFeed() {
-      let feed = await axios.post(
+    compare(a, b) {
+      if (a.date < b.date) {
+        return -1;
+      } else {
+        return 1;
+      }
+    },
+    async getFeed(url) {
+      console.log(url);
+      let data = await axios.post(
         "http://localhost:9000/.netlify/functions/getfeed",
         JSON.stringify({
-          url: "https://rss.art19.com/apology-line",
+          url: url,
         })
       );
-      console.log(feed);
-      this.posts = feed.data.feed.items.map((item) => ({
+      return data.data.feed.items.map((item) => ({
         title: item.title,
-        sub_title: item.pubDate,
+        date: item.pubDate,
         content: item.content,
       }));
+    },
+    async refreshFeed() {
+      this.refreshing = true;
+      let urls = JSON.parse(localStorage.getItem("urls")) || [];
+      for (const url of urls) {
+        this.posts = await this.getFeed(url);
+      }
+      this.posts.sort(this.compare);
+      this.refreshing = false;
+    },
+    storeURL() {
+      if (this.input_url === null) {
+        this.modal = false;
+        return;
+      }
+      let stored_data = JSON.parse(localStorage.getItem("urls")) || [];
+      stored_data.push(this.input_url);
+      console.log(stored_data);
+      localStorage.setItem("urls", JSON.stringify(stored_data));
+      this.input_url = null;
+      this.modal = false;
     },
   },
 };
 </script>
+
+<style scoped>
+#add-feed-modal {
+  padding: 10px;
+}
+</style>
