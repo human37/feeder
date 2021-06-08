@@ -54,14 +54,6 @@
         </v-tooltip>
         <v-tooltip bottom>
           <template v-slot:activator="{ on, attrs }">
-            <v-btn icon v-bind="attrs" v-on="on">
-              <v-icon>mdi-cog</v-icon>
-            </v-btn>
-          </template>
-          <span>Change Settings</span>
-        </v-tooltip>
-        <v-tooltip bottom>
-          <template v-slot:activator="{ on, attrs }">
             <v-btn to="/Login" icon v-bind="attrs" v-on="on">
               <v-icon>mdi-account-circle</v-icon>
             </v-btn>
@@ -89,37 +81,50 @@ export default {
     modal: false,
     input_url: null,
     refreshing: false,
-    posts: [{ title: null, date: null, content: null }],
-    feeds: [{ title: "Reddit", icon: "mdi-reddit" }],
+    posts: [
+      { title: null, creator: null, link: null, date: null, content: null },
+    ],
+    feeds: [],
   }),
   methods: {
     compare(a, b) {
-      if (a.date < b.date) {
+      if (a.date > b.date) {
         return -1;
       } else {
         return 1;
       }
     },
     async getFeed(url) {
-      console.log(url);
       let data = await axios.post(
         "http://localhost:9000/.netlify/functions/getfeed",
         JSON.stringify({
           url: url,
         })
       );
+      const stored_feed = this.feeds.findIndex((feed) => (feed.url == url));
+      if (stored_feed == -1) {
+        this.feeds.push({ title: data.data.feed.title, url: url, is_on: true });
+      } else {
+        this.feeds[stored_feed].title = data.data.feed.title;
+      }
       return data.data.feed.items.map((item) => ({
         title: item.title,
+        creator: item.creator,
+        link: item.link,
         date: item.pubDate,
         content: item.content,
       }));
     },
     async refreshFeed() {
       this.refreshing = true;
-      let urls = JSON.parse(localStorage.getItem("urls")) || [];
-      for (const url of urls) {
-        this.posts = await this.getFeed(url);
+      this.feeds = JSON.parse(localStorage.getItem("feeds")) || this.feeds;
+      this.posts = [];
+      for (const feed of this.feeds) {
+        if (feed.is_on) {
+          this.posts.push.apply(this.posts, await this.getFeed(feed.url));
+        }
       }
+      localStorage.setItem("feeds", JSON.stringify(this.feeds));
       this.posts.sort(this.compare);
       this.refreshing = false;
     },
@@ -128,12 +133,20 @@ export default {
         this.modal = false;
         return;
       }
-      let stored_data = JSON.parse(localStorage.getItem("urls")) || [];
-      stored_data.push(this.input_url);
-      console.log(stored_data);
-      localStorage.setItem("urls", JSON.stringify(stored_data));
+      this.feeds = JSON.parse(localStorage.getItem("feeds")) || this.feeds;
+      let new_feed = { title: null, url: this.input_url, is_on: true };
+      const stored_feed = this.feeds.findIndex(
+        (feed) => (feed.url = new_feed.url)
+      );
+      if (stored_feed == -1) {
+        this.feeds.push(new_feed);
+      } else {
+        console.log("this feed already exists");
+      }
+      localStorage.setItem("feeds", JSON.stringify(this.feeds));
       this.input_url = null;
       this.modal = false;
+      this.refreshFeed();
     },
   },
 };

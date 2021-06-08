@@ -8,9 +8,11 @@
     <div v-else>
       <Post
         v-for="post in posts"
-        :key="post.title"
+        :key="post.link"
         :title="post.title"
-        :sub_title="post.date"
+        :creator="post.creator"
+        :link="post.link"
+        :date="post.date"
         :content="post.content"
       />
     </div>
