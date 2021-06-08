@@ -2,7 +2,7 @@
   <div>
     <v-app>
       <v-navigation-drawer v-model="drawer" temporary app>
-        <SideBar :items="feeds" />
+        <SideBar :items="feeds" v-on:childToParent="updateSwitch" />
       </v-navigation-drawer>
       <v-app-bar app dense>
         <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
@@ -93,6 +93,12 @@ export default {
       } else {
         return 1;
       }
+    },
+    updateSwitch(payload) {
+      let index = this.feeds.findIndex((feed) => feed.url == payload.url);
+      this.feeds[index].is_on = payload.is_on; 
+      localStorage.setItem("feeds", JSON.stringify(this.feeds));
+      console.log("updateSwitchcalled: " + payload);
     },
     async getFeed(url) {
       let data = await axios.post(
