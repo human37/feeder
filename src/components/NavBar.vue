@@ -101,7 +101,7 @@ export default {
           url: url,
         })
       );
-      const stored_feed = this.feeds.findIndex((feed) => (feed.url == url));
+      const stored_feed = this.feeds.findIndex((feed) => feed.url == url);
       if (stored_feed == -1) {
         this.feeds.push({ title: data.data.feed.title, url: url, is_on: true });
       } else {
