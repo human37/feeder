@@ -15,7 +15,7 @@
       </v-card-title>
       <v-card-subtitle> {{ creator || date }} </v-card-subtitle>
       <v-card-text>
-        <div v-html="span(content)"></div>
+        <div v-html="span(content)" id="content"></div>
       </v-card-text>
     </v-card>
   </v-row>

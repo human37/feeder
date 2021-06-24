@@ -14,14 +14,12 @@
     "netlify-lambda": "^2.0.8",
     "rss-parser": "^3.12.0",
     "vue": "^2.6.11",
-    "vue-router": "^3.2.0",
     "vue-web-storage": "^6.1.0",
     "vuetify": "^2.4.0"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",
     "@vue/cli-plugin-eslint": "~4.5.0",
-    "@vue/cli-plugin-router": "^4.5.12",
     "@vue/cli-service": "~4.5.0",
     "babel-eslint": "^10.1.0",
     "eslint": "^7.27.0",

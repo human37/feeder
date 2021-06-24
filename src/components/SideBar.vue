@@ -10,7 +10,12 @@
     </v-list-item>
     <v-divider></v-divider>
     <v-list-item>
-      <v-switch label="All"></v-switch>
+      <v-switch
+        v-model="all_switch"
+        label="All"
+        @change="$emit('itemSwitch', { all_switch: all_switch })"
+        inset
+      ></v-switch>
     </v-list-item>
     <v-divider></v-divider>
     <v-list>
@@ -18,7 +23,8 @@
         <v-switch
           v-model="item.is_on"
           :label="item.title"
-          @change="$emit('childToParent', { url: item.url, is_on: item.is_on })"
+          @change="$emit('itemSwitch', { url: item.url, is_on: item.is_on })"
+          inset
         ></v-switch>
       </v-list-item>
       <v-divider></v-divider>
@@ -29,11 +35,9 @@
 <script>
 export default {
   name: "SideBar",
-  data() {
-    return {
-      switch_state: true,
-    };
-  },
+  data: () => ({
+    all_switch: false,
+  }),
   props: {
     items: {
       type: Array,

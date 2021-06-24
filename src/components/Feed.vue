@@ -1,9 +1,7 @@
 <template>
   <v-app id="feed">
     <div v-if="refreshing" id="loading-circle">
-      <v-progress-circular
-        indeterminate
-      ></v-progress-circular>
+      <v-progress-circular indeterminate></v-progress-circular>
     </div>
     <div v-else>
       <Post
