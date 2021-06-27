@@ -19,7 +19,7 @@ exports.handler = async function(event) {
   try {
     let feed = await parser.parseURL(url);
     return {
-      statusCode: 201,
+      statusCode: 200,
       headers,
       body: JSON.stringify({
         feed,

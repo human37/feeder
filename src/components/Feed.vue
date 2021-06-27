@@ -37,7 +37,6 @@ export default {
   padding-top: 20px;
 }
 #loading-circle {
-  margin-top: 40%;
   text-align: center;
 }
 </style>

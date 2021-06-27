@@ -92,8 +92,10 @@ export default {
       // feed url is not already added
       if (stored_feed == -1) {
         // feed url is a valid rss feed
-        if (await getFeed(new_feed.url, true)) {
+        let valid_response = await getFeed(new_feed.url);
+        if (valid_response) {
           this.add_rss_loading = false;
+          new_feed.title = valid_response[0].feed_title;
           feeds_list.push(new_feed);
           localStorage.setItem("feeds", JSON.stringify(feeds_list));
           this.add_rss_error = null;
@@ -108,6 +110,7 @@ export default {
         this.add_rss_error = "you already have this feed added";
       }
       this.add_rss_loading = false;
+      this.$emit('addNewFeed', feeds_list);
     },
     async refreshFeed() {
       return true;

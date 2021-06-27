@@ -1,15 +1,22 @@
 <template>
   <div>
-    <v-navigation-drawer v-model="drawer_open" temporary app flat>
-      <SideBar :items="feeds_list" v-on:itemSwitch="updateSwitch" />
+    <v-navigation-drawer v-model="drawer_open" temporary app>
+      <SideBar
+        :items="feeds_list"
+        @itemSwitch="updateSwitch"
+        @allSelectedChanged="allSelectedChanged"
+      />
     </v-navigation-drawer>
-    <v-app-bar app dense flat>
+    <v-app-bar app dense>
       <v-app-bar-nav-icon
         @click="drawer_open = !drawer_open"
       ></v-app-bar-nav-icon>
       <v-app-bar-title>simple RSS</v-app-bar-title>
       <v-spacer></v-spacer>
-      <ToolTips v-on:refreshRequest="$emit('refreshRequest')" />
+      <ToolTips
+        @refreshRequest="$emit('refreshRequest')"
+        @addNewFeed="addNewFeed"
+      />
     </v-app-bar>
   </div>
 </template>
@@ -26,6 +33,8 @@ export default {
   data: () => ({
     drawer_open: false,
     feeds_list: JSON.parse(localStorage.getItem("feeds")) || [],
+    old_all_selected: [],
+    new_all_selected: [],
   }),
   methods: {
     updateSwitch(payload) {
@@ -40,6 +49,21 @@ export default {
       }
       localStorage.setItem("feeds", JSON.stringify(feeds_list));
       this.feeds_list = feeds_list;
+    },
+    addNewFeed(payload) {
+      this.feeds_list = payload;
+    },
+    allSelectedChanged(payload) {
+      this.new_all_selected = payload;
+    },
+  },
+  watch: {
+    // checks to see if the toggles were changed, and refreshes feed accordingly
+    drawer_open: function() {
+      if (this.old_all_selected != this.new_all_selected) {
+        this.$emit("refreshRequest");
+      }
+      this.new_all_selected = this.old_all_selected;
     },
   },
 };

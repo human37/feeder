@@ -37,10 +37,22 @@ export default {
   name: "SideBar",
   data: () => ({
     all_switch: false,
+    all_selected: [],
   }),
   props: {
     items: {
       type: Array,
+    },
+  },
+  watch: {
+    items: function() {
+      let all_selected = [];
+      this.items.forEach((item) => {
+        if (item.is_on) {
+          all_selected.push(item);
+        }
+      });
+      this.$emit('allSelectedChanged', all_selected);
     },
   },
 };

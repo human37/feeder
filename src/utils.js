@@ -8,7 +8,7 @@ function compare(a, b) {
   }
 }
 
-async function getFeed(url, check_if_valid = false) {
+async function getFeed(url) {
   let response = await axios
     .post(
       "http://localhost:9000/.netlify/functions/getfeed",
@@ -19,20 +19,18 @@ async function getFeed(url, check_if_valid = false) {
     .catch((err) => {
       console.log(err);
     });
-  if (check_if_valid) {
-    if (response) {
-      return true;
-    } else {
-      return false;
-    }
+  if (response) {
+    return response.data.feed.items.map((item) => ({
+      feed_title: response.data.feed.title,
+      title: item.title,
+      creator: item.creator,
+      link: item.link,
+      date: item.pubDate,
+      content: item.content,
+    }));
+  } else {
+    return false;
   }
-  return response.data.feed.items.map((item) => ({
-    title: item.title,
-    creator: item.creator,
-    link: item.link,
-    date: item.pubDate,
-    content: item.content,
-  }));
 }
 
 async function refreshFeed() {
