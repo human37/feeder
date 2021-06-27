@@ -1,7 +1,7 @@
 <template>
-  <v-app id="feed">
-    <div v-if="refreshing" id="loading-circle">
-      <v-progress-circular indeterminate></v-progress-circular>
+  <div id="feed">
+    <div v-if="feed_refreshing" id="loading-circle">
+      <v-progress-circular indeterminate size="100"> </v-progress-circular>
     </div>
     <div v-else>
       <Post
@@ -14,7 +14,7 @@
         :content="post.content"
       />
     </div>
-  </v-app>
+  </div>
 </template>
 
 <script>
@@ -23,7 +23,7 @@ export default {
   name: "Feed",
   props: {
     posts: Array,
-    refreshing: Boolean,
+    feed_refreshing: Boolean,
   },
   components: {
     Post,
@@ -34,9 +34,10 @@ export default {
 
 <style scoped>
 #feed {
-  padding-top: 70px;
+  padding-top: 20px;
 }
 #loading-circle {
-  margin: auto;
+  margin-top: 40%;
+  text-align: center;
 }
 </style>

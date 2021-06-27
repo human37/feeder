@@ -1,6 +1,6 @@
 <template>
   <v-row dense id="row" justify="center">
-    <v-card id="card">
+    <v-card id="card" >
       <v-card-title>
         {{ title }}
         <v-spacer></v-spacer>
