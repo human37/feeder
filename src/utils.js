@@ -22,7 +22,7 @@ async function getFeed(url) {
       title: item.title,
       creator: item.creator,
       link: item.link,
-      date: item.pubDate,
+      date: Date.parse(item.pubDate),
       content: item.content,
     }));
   } else {

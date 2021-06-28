@@ -1,6 +1,6 @@
 <template>
   <v-row dense id="row" justify="center">
-    <v-card id="card" >
+    <v-card id="card">
       <v-card-title>
         {{ title }}
         <v-spacer></v-spacer>
@@ -13,7 +13,9 @@
           <span>Visit Source</span>
         </v-tooltip>
       </v-card-title>
-      <v-card-subtitle> {{ creator || date }} </v-card-subtitle>
+      <v-card-subtitle>
+        {{ (formatDate(date) || creator) + "  |  " + feed_title }}
+      </v-card-subtitle>
       <v-card-text>
         <div v-html="span(content)" id="content"></div>
       </v-card-text>
@@ -26,14 +28,22 @@ export default {
   name: "Post",
   props: {
     title: String,
+    feed_title: String,
     creator: String,
     link: String,
-    date: String,
+    date: Number,
     content: String,
   },
   methods: {
     span(text) {
       return "<span>" + text + "</span>";
+    },
+    formatDate(date) {
+      if (date === null) {
+        return false;
+      }
+      let pretty_date = new Date(date);
+      return pretty_date.toDateString();
     },
   },
 };
@@ -51,7 +61,8 @@ export default {
   max-height: inherit;
   min-width: 100%;
 }
-.v-card__text, .v-card__title {
-  word-break: normal; /* maybe !important  */
+.v-card__text,
+.v-card__title {
+  word-break: normal;
 }
 </style>

@@ -14,6 +14,7 @@
         v-for="post in posts"
         :key="post.link + post.feed_title"
         :title="post.title"
+        :feed_title="post.feed_title"
         :creator="post.creator"
         :link="post.link"
         :date="post.date"
@@ -87,5 +88,6 @@ export default {
 #no-content {
   text-align: center;
   padding-top: 20px;
+  color: gray;
 }
 </style>
