@@ -21,7 +21,7 @@
   resolved "https://registry.yarnpkg.com/@babel/compat-data/-/compat-data-7.14.7.tgz#7b047d7a3a89a67d2258dc61f604f098f1bc7e08"
   integrity sha512-nS6dZaISCXJ3+518CWiBfEr//gHyMO02uDxBkXTKZDN5POruCnOZ1N4YBRZDCabwF8nZMWBpRxIicmXtBs+fvw==
 
-"@babel/core@^7.10.4", "@babel/core@^7.11.0", "@babel/core@^7.14.6":
+"@babel/core@^7.10.4", "@babel/core@^7.11.0":
   version "7.14.6"
   resolved "https://registry.yarnpkg.com/@babel/core/-/core-7.14.6.tgz#e0814ec1a950032ff16c13a2721de39a8416fcab"
   integrity sha512-gJnOEWSqTk96qG5BoIrl5bVtc23DCycmIePPYnamY9RboYdI4nFy5vAQMSl81O5K/W0sLDWfGysnOECC+KUUCA==
@@ -1925,7 +1925,7 @@ babel-eslint@^10.1.0:
     eslint-visitor-keys "^1.0.0"
     resolve "^1.12.0"
 
-babel-loader@^8.1.0, babel-loader@^8.2.2:
+babel-loader@^8.1.0:
   version "8.2.2"
   resolved "https://registry.yarnpkg.com/babel-loader/-/babel-loader-8.2.2.tgz#9363ce84c10c9a40e6c753748e1441b60c8a0b81"
   integrity sha512-JvTd0/D889PQBtUXJ2PXaKU/pjZDMtHA9V2ecm+eNRmmBCMR09a+fmpGTNwnJtFmFl5Ei7Vy47LjBb+L0wQ99g==
