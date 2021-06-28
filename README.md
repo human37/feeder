@@ -1,9 +1,11 @@
-# simple-rss-reader
+# rss-reader
 
 ## Overview
-This is a web application that lets you add, display, and filter any RSS feed. 
+
+This is a web application that lets you add, display, and filter any RSS feeds.
 
 ## Technologies
+
 - VueJS
 - Vuetify
 - Netlify Lambda
