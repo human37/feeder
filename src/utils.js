@@ -1,14 +1,19 @@
 import axios from "axios";
 
+let server_url =
+  process.env.NODE_ENV == "production"
+    ? "/.netlify/functions/getfeed"
+    : "http://localhost:9000/.netlify/functions/getfeed";
+
 /**
- * call the lambda function and parses the rss feed 
- * @param {string} url 
- * @returns object || false 
+ * call the lambda function and parses the rss feed
+ * @param {string} url
+ * @returns object || false
  */
 async function getFeed(url) {
   let response = await axios
     .post(
-      "http://localhost:9000/.netlify/functions/getfeed",
+      `${server_url}`,
       JSON.stringify({
         url: url,
       })

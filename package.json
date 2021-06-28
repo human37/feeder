@@ -6,6 +6,7 @@
     "serve": "vue-cli-service serve",
     "lambda": "netlify-lambda serve lambda",
     "build": "vue-cli-service build",
+    "prod": "yarn build; netlify-lambda build lambda",
     "lint": "eslint src/ lambda/ --fix"
   },
   "dependencies": {
