@@ -1,13 +1,10 @@
 import axios from "axios";
 
-function compare(a, b) {
-  if (a.date > b.date) {
-    return -1;
-  } else {
-    return 1;
-  }
-}
-
+/**
+ * call the lambda function and parses the rss feed 
+ * @param {string} url 
+ * @returns object || false 
+ */
 async function getFeed(url) {
   let response = await axios
     .post(
@@ -33,15 +30,4 @@ async function getFeed(url) {
   }
 }
 
-async function refreshFeed() {
-  let posts = [];
-  let feeds_list = JSON.parse(localStorage.getItem("feeds")) || [];
-  for (const feed of feeds_list) {
-    if (feed.is_on) {
-      posts.push.apply(posts, await getFeed(feed.url));
-    }
-  }
-  return posts.sort(compare);
-}
-
-export { getFeed, refreshFeed };
+export { getFeed };
