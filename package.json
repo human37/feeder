@@ -10,7 +10,9 @@
     "lint": "eslint src/ lambda/ --fix"
   },
   "dependencies": {
+    "@babel/core": "^7.14.6",
     "axios": "^0.21.1",
+    "babel-loader": "^8.2.2",
     "core-js": "^3.6.5",
     "netlify-lambda": "^2.0.8",
     "rss-parser": "^3.12.0",
