@@ -1,5 +1,5 @@
 <template>
-  <div v-if="if_posts" id="feed">
+  <div v-if="if_posts || feed_refreshing" id="feed">
     <div v-if="feed_refreshing" id="loading-circle">
       <v-progress-circular
         :value="feed_refreshing_progress"
@@ -12,7 +12,7 @@
     <div v-else>
       <Post
         v-for="post in posts"
-        :key="post.link"
+        :key="post.link + post.feed_title"
         :title="post.title"
         :creator="post.creator"
         :link="post.link"
@@ -27,7 +27,7 @@
       <br />
       tap the <v-icon>mdi-rss</v-icon> button in order to add a feed <br />
       <br />
-      and make sure you have some feeds toggled on the sidebar
+      and toggle <v-icon>mdi-toggle-switch</v-icon> feeds on the sidebar
     </div>
   </div>
 </template>

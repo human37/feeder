@@ -60,10 +60,12 @@ export default {
   watch: {
     // checks to see if the toggles were changed, and refreshes feed accordingly
     drawer_open: function() {
-      if (this.old_all_selected != this.new_all_selected) {
-        this.$emit("refreshRequest");
+      if (!this.drawer_open) {
+        if (this.old_all_selected != this.new_all_selected) {
+          this.$emit("refreshRequest");
+        }
+        this.new_all_selected = this.old_all_selected;
       }
-      this.new_all_selected = this.old_all_selected;
     },
   },
 };

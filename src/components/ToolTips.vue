@@ -111,6 +111,7 @@ export default {
       }
       this.add_rss_loading = false;
       this.$emit('addNewFeed', feeds_list);
+      this.$emit('refreshRequest');
     },
     async refreshFeed() {
       return true;
