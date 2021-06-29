@@ -11,7 +11,7 @@
       <v-app-bar-nav-icon
         @click="drawer_open = !drawer_open"
       ></v-app-bar-nav-icon>
-      <v-app-bar-title>simple RSS</v-app-bar-title>
+      <v-app-bar-title>simple feeder</v-app-bar-title>
       <v-spacer></v-spacer>
       <ToolTips
         @refreshRequest="$emit('refreshRequest')"

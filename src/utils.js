@@ -1,7 +1,7 @@
 import axios from "axios";
 
 let server_url =
-  process.env.NODE_ENV == "production"
+  process.env.NODE_ENV == "prod"
     ? "/.netlify/functions/getfeed"
     : "http://localhost:9000/.netlify/functions/getfeed";
 
