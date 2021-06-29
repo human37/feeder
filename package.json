@@ -5,11 +5,12 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "lambda": "netlify-lambda serve lambda",
-    "build": "npx vue-cli-service build",
+    "build": "vue-cli-service build",
     "prod": "yarn build; netlify-lambda build lambda",
     "lint": "eslint src/ lambda/ --fix"
   },
   "dependencies": {
+    "@vue/cli": "^4.5.13",
     "axios": "^0.21.1",
     "core-js": "^3.6.5",
     "netlify-lambda": "^2.0.8",
