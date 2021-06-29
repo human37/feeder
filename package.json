@@ -10,7 +10,6 @@
     "lint": "eslint src/ lambda/ --fix"
   },
   "dependencies": {
-    "@vue/cli": "^4.5.13",
     "axios": "^0.21.1",
     "core-js": "^3.6.5",
     "netlify-lambda": "^2.0.8",
