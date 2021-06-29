@@ -18,12 +18,11 @@
     "vue-web-storage": "^6.1.0",
     "vuetify": "^2.4.0",
     "@vue/cli-service": "~4.5.0",
-    "vue-cli-plugin-vuetify": "~2.3.1"
+    "vue-cli-plugin-vuetify": "~2.3.1",
+    "@vue/cli-plugin-babel": "~4.5.0",
+    "@vue/cli-plugin-eslint": "~4.5.0"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "~4.5.0",
-    "@vue/cli-plugin-eslint": "~4.5.0",
-    "@vue/cli-service": "~4.5.0",
     "babel-eslint": "^10.1.0",
     "eslint": "^7.27.0",
     "eslint-plugin-vue": "^7.10.0",
