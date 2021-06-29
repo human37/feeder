@@ -1,4 +1,4 @@
-# simple feeder 
+# feeder 
 
 ## Overview
 This is a web application that lets you add, display, and filter any RSS feeds, and it is currently [deployed](https://simple-feeder.netlify.app/) on netlify. 
