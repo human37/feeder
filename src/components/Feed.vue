@@ -24,7 +24,7 @@
   </div>
   <div v-else>
     <div id="no-content">
-      no posts currently to see <br />
+      no posts currently to see <v-icon>mdi-eye</v-icon> <br />
       <br />
       tap the <v-icon>mdi-rss</v-icon> button in order to add a feed <br />
       <br />
