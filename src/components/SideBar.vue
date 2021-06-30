@@ -1,13 +1,5 @@
 <template>
   <div>
-    <v-list-item>
-      <v-list-item-content>
-        <v-list-item-title>
-          <v-icon>mdi-rss</v-icon>
-          Feeds
-        </v-list-item-title>
-      </v-list-item-content>
-    </v-list-item>
     <v-divider></v-divider>
     <v-list-item>
       <v-switch
@@ -16,6 +8,10 @@
         @change="$emit('itemSwitch', { all_switch: all_switch })"
         inset
       ></v-switch>
+      <v-spacer></v-spacer>
+      <v-btn @click="$emit('refreshRequest')" icon>
+        <v-icon>mdi-refresh</v-icon>
+      </v-btn>
     </v-list-item>
     <v-divider></v-divider>
     <v-list>
@@ -26,6 +22,10 @@
           @change="$emit('itemSwitch', { url: item.url, is_on: item.is_on })"
           inset
         ></v-switch>
+        <v-spacer></v-spacer>
+        <v-btn @click="$emit('itemDelete', { url: item.url })" icon>
+          <v-icon>mdi-delete</v-icon>
+        </v-btn>
       </v-list-item>
       <v-divider></v-divider>
     </v-list>
@@ -52,7 +52,7 @@ export default {
           all_selected.push(item);
         }
       });
-      this.$emit('allSelectedChanged', all_selected);
+      this.$emit("allSelectedChanged", all_selected);
     },
   },
 };
