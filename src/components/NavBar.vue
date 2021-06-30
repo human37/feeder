@@ -1,13 +1,15 @@
 <template>
   <div>
-    <v-navigation-drawer v-model="drawer_open" temporary app>
+    <v-navigation-drawer v-model="drawer_open" app>
       <SideBar
         :items="feeds_list"
+        @refreshRequest="$emit('refreshRequest')"
         @itemSwitch="updateSwitch"
+        @itemDelete="deleteFeed"
         @allSelectedChanged="allSelectedChanged"
       />
     </v-navigation-drawer>
-    <v-app-bar app dense>
+    <v-app-bar app>
       <v-app-bar-nav-icon
         @click="drawer_open = !drawer_open"
       ></v-app-bar-nav-icon>
@@ -38,7 +40,7 @@ export default {
   }),
   methods: {
     updateSwitch(payload) {
-      let feeds_list = JSON.parse(localStorage.getItem("feeds")) || [];
+      let feeds_list = JSON.parse(localStorage.getItem("feeds")) || this.feeds_list;
       if (payload.all_switch != undefined) {
         feeds_list.forEach((feed) => {
           feed.is_on = payload.all_switch;
@@ -49,6 +51,11 @@ export default {
       }
       localStorage.setItem("feeds", JSON.stringify(feeds_list));
       this.feeds_list = feeds_list;
+    },
+    deleteFeed(payload) {
+      this.feeds_list = JSON.parse(localStorage.getItem("feeds")) || this.feeds_list;
+      this.feeds_list = this.feeds_list.filter((feed) => feed.url != payload.url);
+      localStorage.setItem("feeds", JSON.stringify(this.feeds_list));
     },
     addNewFeed(payload) {
       this.feeds_list = payload;
