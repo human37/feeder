@@ -3,7 +3,7 @@
     <div v-if="feed_refreshing" id="loading-circle">
       <v-progress-circular
         :value="feed_refreshing_progress"
-        size="250"
+        size="300"
         width="15"
       >
         {{ loading_message }}
@@ -65,6 +65,9 @@ export default {
       "killing zombies...",
       "battling GPT4...",
       "stealing the declaration of independence...",
+      "hacking the pentagon...",
+      "rewriting the linux kernel in rust...",
+      "responding to microsoft acquisition offers...",
     ],
     loading_message: "refreshing...",
   }),

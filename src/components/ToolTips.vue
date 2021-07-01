@@ -17,6 +17,8 @@
           :loading="add_rss_loading"
           :error-messages="add_rss_error"
           @emptied="add_rss_error = null"
+          autocomplete="false"
+          @keydown.enter="storeRSS"
           clearable
           required
         ></v-text-field>
@@ -101,17 +103,15 @@ export default {
           this.add_rss_error = null;
           this.add_rss_loading = false;
           this.add_rss_open = false;
+          this.$emit("addNewFeed", feeds_list);
+          this.$emit("refreshRequest");
         } else {
           this.add_rss_error = "this is a bad feed URL";
-          console.log("this is a bad feed");
         }
       } else {
-        console.log("this feed already exists");
         this.add_rss_error = "you already have this feed added";
       }
       this.add_rss_loading = false;
-      this.$emit('addNewFeed', feeds_list);
-      this.$emit('refreshRequest');
     },
     async refreshFeed() {
       return true;
