@@ -10,12 +10,19 @@
       />
     </v-navigation-drawer>
     <v-app-bar app>
-      <v-app-bar-nav-icon
-        @click="drawer_open = !drawer_open"
-      ></v-app-bar-nav-icon>
-      <v-app-bar-title>simple feeder</v-app-bar-title>
+      <v-app-bar-nav-icon @click="drawer_open = !drawer_open">
+        <div v-if="!if_mobile">
+          <v-icon v-if="drawer_open">mdi-arrow-left</v-icon>
+          <v-icon v-else>mdi-arrow-right</v-icon>
+        </div>
+      </v-app-bar-nav-icon>
+      <v-app-bar-title>feeder</v-app-bar-title>
       <v-spacer></v-spacer>
-      <ToolTips
+      <ToolTips v-if="!if_mobile"
+        @refreshRequest="$emit('refreshRequest')"
+        @addNewFeed="addNewFeed"
+      />
+      <ToolTipsMobile v-else
         @refreshRequest="$emit('refreshRequest')"
         @addNewFeed="addNewFeed"
       />
@@ -26,21 +33,26 @@
 <script>
 import SideBar from "./SideBar.vue";
 import ToolTips from "./ToolTips.vue";
+import ToolTipsMobile from "./ToolTipsMobile.vue";
+import { isMobile } from "mobile-device-detect";
 export default {
   name: "NavBar",
   components: {
     SideBar,
     ToolTips,
+    ToolTipsMobile,
   },
   data: () => ({
-    drawer_open: false,
+    if_mobile: isMobile,
+    drawer_open: !isMobile,
     feeds_list: JSON.parse(localStorage.getItem("feeds")) || [],
     old_all_selected: [],
     new_all_selected: [],
   }),
   methods: {
     updateSwitch(payload) {
-      let feeds_list = JSON.parse(localStorage.getItem("feeds")) || this.feeds_list;
+      let feeds_list =
+        JSON.parse(localStorage.getItem("feeds")) || this.feeds_list;
       if (payload.all_switch != undefined) {
         feeds_list.forEach((feed) => {
           feed.is_on = payload.all_switch;
@@ -53,8 +65,11 @@ export default {
       this.feeds_list = feeds_list;
     },
     deleteFeed(payload) {
-      this.feeds_list = JSON.parse(localStorage.getItem("feeds")) || this.feeds_list;
-      this.feeds_list = this.feeds_list.filter((feed) => feed.url != payload.url);
+      this.feeds_list =
+        JSON.parse(localStorage.getItem("feeds")) || this.feeds_list;
+      this.feeds_list = this.feeds_list.filter(
+        (feed) => feed.url != payload.url
+      );
       localStorage.setItem("feeds", JSON.stringify(this.feeds_list));
     },
     addNewFeed(payload) {
