@@ -64,3 +64,14 @@ export default {
   },
 };
 </script>
+
+<style>
+/* Hide scrollbar for Chrome, Safari and Opera */
+body::-webkit-scrollbar {
+  display: none;
+}
+/* Hide scrollbar for IE and Edge */
+body {
+  -ms-overflow-style: none;
+}
+</style>
