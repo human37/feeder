@@ -18,11 +18,7 @@
       </v-app-bar-nav-icon>
       <v-app-bar-title>feeder</v-app-bar-title>
       <v-spacer></v-spacer>
-      <ToolTips v-if="!if_mobile"
-        @refreshRequest="$emit('refreshRequest')"
-        @addNewFeed="addNewFeed"
-      />
-      <ToolTipsMobile v-else
+      <NavIcons
         @refreshRequest="$emit('refreshRequest')"
         @addNewFeed="addNewFeed"
       />
@@ -32,15 +28,13 @@
 
 <script>
 import SideBar from "./SideBar.vue";
-import ToolTips from "./ToolTips.vue";
-import ToolTipsMobile from "./ToolTipsMobile.vue";
+import NavIcons from "./NavIcons.vue";
 import { isMobile } from "mobile-device-detect";
 export default {
   name: "NavBar",
   components: {
     SideBar,
-    ToolTips,
-    ToolTipsMobile,
+    NavIcons,
   },
   data: () => ({
     if_mobile: isMobile,
