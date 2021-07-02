@@ -2,13 +2,18 @@
   <div>
     <v-tooltip bottom>
       <template v-slot:activator="{ on, attrs }">
-        <v-btn @click="add_rss_open = true" icon v-bind="attrs" v-on="on">
+        <v-btn
+          @click="$emit('updateAddRSSOpen', true)"
+          icon
+          v-bind="attrs"
+          v-on="on"
+        >
           <v-icon>mdi-rss</v-icon>
         </v-btn>
       </template>
       <span>Add RSS Feed</span>
     </v-tooltip>
-    <v-dialog v-model="add_rss_open" max-width="490">
+    <v-dialog v-model="modal_open" max-width="690" max-height="350">
       <v-card id="add-rss-modal">
         <v-text-field
           label="Enter your RSS feed URL"
@@ -16,16 +21,15 @@
           @change="add_rss_url = $event"
           :loading="add_rss_loading"
           :error-messages="add_rss_error"
-          @emptied="add_rss_error = null"
           autocomplete="false"
-          @keydown.enter="storeRSS"
+          @keydown.enter="$emit('storeRSS', add_rss_url)"
           clearable
           required
         ></v-text-field>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn text @click="add_rss_open = false"> Cancel </v-btn>
-          <v-btn text @click="storeRSS"> Add </v-btn>
+          <v-btn text @click="$emit('updateAddRSSOpen', false)"> Cancel </v-btn>
+          <v-btn text @click="$emit('storeRSS', add_rss_url)"> Add </v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -62,59 +66,26 @@
 </template>
 
 <script>
-import { getFeed } from "../utils.js";
 export default {
   name: "ToolTips",
   data: () => ({
-    add_rss_open: false,
+    modal_open: false,
     add_rss_url: null,
-    add_rss_error: null,
-    add_rss_loading: false,
   }),
+  props: {
+    add_rss_open: Boolean,
+    add_rss_loading: Boolean,
+    add_rss_error: String,
+  },
   watch: {
     add_rss_open: function() {
+      this.modal_open = this.add_rss_open;
       this.add_rss_url = null;
-      this.add_rss_error = null;
-      this.add_rss_loading = false;
     },
-  },
-  methods: {
-    async storeRSS() {
-      this.add_rss_loading = true;
-      if (this.add_rss_url === null) {
-        this.add_rss_open = false;
-        return;
+    modal_open: function() {
+      if (this.modal_open === false) {
+        this.$emit("updateAddRSSOpen", false);
       }
-      // pull existing list from local storage
-      let feeds_list = JSON.parse(localStorage.getItem("feeds")) || [];
-      let new_feed = { title: null, url: this.add_rss_url, is_on: true };
-      const stored_feed = feeds_list.findIndex(
-        (feed) => feed.url == new_feed.url
-      );
-      // feed url is not already added
-      if (stored_feed == -1) {
-        // feed url is a valid rss feed
-        let valid_response = await getFeed(new_feed.url);
-        if (valid_response) {
-          this.add_rss_loading = false;
-          new_feed.title = valid_response[0].feed_title;
-          feeds_list.push(new_feed);
-          localStorage.setItem("feeds", JSON.stringify(feeds_list));
-          this.add_rss_error = null;
-          this.add_rss_loading = false;
-          this.add_rss_open = false;
-          this.$emit("addNewFeed", feeds_list);
-          this.$emit("refreshRequest");
-        } else {
-          this.add_rss_error = "this is a bad feed URL";
-        }
-      } else {
-        this.add_rss_error = "you already have this feed added";
-      }
-      this.add_rss_loading = false;
-    },
-    async refreshFeed() {
-      return true;
     },
   },
 };

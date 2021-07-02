@@ -4,7 +4,7 @@
       <v-card-title>
         {{ title }}
         <v-spacer></v-spacer>
-        <v-tooltip bottom>
+        <v-tooltip v-if="!if_mobile" bottom>
           <template v-slot:activator="{ on, attrs }">
             <v-btn icon :href="link" target="_blank" v-bind="attrs" v-on="on">
               <v-icon>mdi-link</v-icon>
@@ -12,6 +12,16 @@
           </template>
           <span>Visit Source</span>
         </v-tooltip>
+        <v-btn
+          v-else
+          icon
+          :href="link"
+          target="_blank"
+          v-bind="attrs"
+          v-on="on"
+        >
+          <v-icon>mdi-link</v-icon>
+        </v-btn>
       </v-card-title>
       <v-card-subtitle>
         {{ (formatDate(date) || creator) + "  |  " + feed_title }}
@@ -24,8 +34,12 @@
 </template>
 
 <script>
+import { isMobile } from "mobile-device-detect";
 export default {
   name: "Post",
+  data: () => ({
+    if_mobile: isMobile,
+  }),
   props: {
     title: String,
     feed_title: String,
