@@ -66,8 +66,8 @@ export default {
 </script>
 
 <style>
-/* Hide horizontal scrollbar for Chrome, Safari and Opera */
 body {
+  max-width: 100%;
   overflow-x: hidden;
 }
 </style>
