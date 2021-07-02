@@ -65,7 +65,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 body {
   max-width: 100%;
   overflow-x: hidden;
