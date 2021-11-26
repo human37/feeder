@@ -13,19 +13,24 @@
       </template>
       <span>Add RSS Feed</span>
     </v-tooltip>
-    <v-dialog v-model="modal_open" max-width="690" max-height="350">
+    <v-dialog v-model="modal_open" max-width="690" max-height="590">
       <v-card id="add-rss-modal">
-        <v-text-field
-          label="Enter your RSS feed URL"
-          :value="add_rss_url"
-          @change="add_rss_url = $event"
-          :loading="add_rss_loading"
-          :error-messages="add_rss_error"
-          autocomplete="false"
-          @keydown.enter="$emit('storeRSS', add_rss_url)"
-          clearable
-          required
-        ></v-text-field>
+        <v-card-title>
+          Add RSS Feed
+        </v-card-title>
+        <v-card-text>
+          <v-text-field
+            label="Enter your RSS feed URL"
+            :value="add_rss_url"
+            @change="add_rss_url = $event"
+            :loading="add_rss_loading"
+            :error-messages="add_rss_error"
+            autocomplete="false"
+            @keydown.enter="$emit('storeRSS', add_rss_url)"
+            clearable
+            required
+          ></v-text-field>
+        </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn text @click="$emit('updateAddRSSOpen', false)"> Cancel </v-btn>
