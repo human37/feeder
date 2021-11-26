@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-navigation-drawer v-model="drawer_open" app>
+    <v-navigation-drawer v-model="drawer_open" app floating>
       <SideBar
         :items="feeds_list"
         @refreshRequest="$emit('refreshRequest')"
@@ -9,7 +9,7 @@
         @allSelectedChanged="allSelectedChanged"
       />
     </v-navigation-drawer>
-    <v-app-bar app>
+    <v-app-bar app flat>
       <v-app-bar-nav-icon @click="drawer_open = !drawer_open">
         <div v-if="!if_mobile">
           <v-icon v-if="drawer_open">mdi-arrow-left</v-icon>
