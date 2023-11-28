@@ -30,6 +30,7 @@ import ToolTips from "./ToolTips.vue";
 import ToolTipsMobile from "./ToolTipsMobile.vue";
 import { isMobile } from "mobile-device-detect";
 import { getFeed } from "../utils.js";
+import { mapActions, mapGetters } from "vuex";
 export default {
   name: "NavIcons",
   data: () => ({
@@ -50,15 +51,18 @@ export default {
       this.add_rss_loading = false;
     },
   },
+  computed: {
+    ...mapGetters(["getFeedsList"]),
+  },
   methods: {
+    ...mapActions(["addNewFeed", "refreshPostsFromFeeds"]),
     async storeRSS(url) {
       this.add_rss_loading = true;
       if (url === null) {
         this.add_rss_open = false;
         return;
       }
-      // pull existing list from local storage
-      let feeds_list = JSON.parse(localStorage.getItem("feeds")) || [];
+      let feeds_list = this.getFeedsList;
       let new_feed = { title: null, url: url, is_on: true };
       const stored_feed = feeds_list.findIndex(
         (feed) => feed.url == new_feed.url
@@ -70,13 +74,11 @@ export default {
         if (valid_response) {
           this.add_rss_loading = false;
           new_feed.title = valid_response[0].feed_title;
-          feeds_list.push(new_feed);
-          localStorage.setItem("feeds", JSON.stringify(feeds_list));
+          this.addNewFeed(new_feed);
           this.add_rss_error = null;
           this.add_rss_loading = false;
           this.add_rss_open = false;
-          this.$emit("addNewFeed", feeds_list);
-          this.$emit("refreshRequest");
+          await this.refreshPostsFromFeeds();
         } else {
           this.add_rss_error = "this is a bad feed URL";
         }
