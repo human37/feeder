@@ -3,9 +3,9 @@
     <v-divider></v-divider>
     <v-list-item>
       <v-switch
-        v-model="all_switch"
+        :input-value="isToggleAllFeedsOn"
         label="All"
-        @change="$emit('itemSwitch', { all_switch: all_switch })"
+        @change="handleToggleAllFeeds"
         inset
       ></v-switch>
       <v-spacer></v-spacer>
@@ -13,17 +13,22 @@
         <v-icon>mdi-refresh</v-icon>
       </v-btn>
     </v-list-item>
-    <v-divider></v-divider>
+    <v-divider v-if="!isFeedsEmpty"></v-divider>
     <v-list>
-      <v-list-item v-for="item in items" :key="item.title" link>
+      <v-list-item
+        v-for="feed in getFeedsList"
+        class="feed-switch"
+        :key="feed.title"
+        link
+      >
         <v-switch
-          v-model="item.is_on"
-          :label="item.title"
-          @change="$emit('itemSwitch', { url: item.url, is_on: item.is_on })"
+          :input-value="feed.is_on"
+          :label="feed.title"
+          @change="handleToggleFeed(feed)"
           inset
         ></v-switch>
         <v-spacer></v-spacer>
-        <v-btn @click="$emit('itemDelete', { url: item.url })" icon>
+        <v-btn @click="handleDeleteFeed" icon>
           <v-icon>mdi-delete</v-icon>
         </v-btn>
       </v-list-item>
@@ -33,27 +38,35 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from "vuex";
 export default {
   name: "SideBar",
   data: () => ({
     all_switch: false,
     all_selected: [],
   }),
-  props: {
-    items: {
-      type: Array,
+  computed: {
+    ...mapGetters(["getFeedsList", "isToggleAllFeedsOn"]),
+    isFeedsEmpty() {
+      return this.getFeedsList.length == 0;
     },
   },
-  watch: {
-    items: function() {
-      let all_selected = [];
-      this.items.forEach((item) => {
-        if (item.is_on) {
-          all_selected.push(item);
-        }
-      });
-      this.$emit("allSelectedChanged", all_selected);
+  methods: {
+    ...mapActions(["toggleFeed", "deleteFeed", "handleToggleAllFeeds"]),
+    handleToggleFeed(feed) {
+      this.toggleFeed(feed);
+    },
+    handleDeleteFeed(feed) {
+      this.deleteFeed(feed);
     },
   },
 };
 </script>
+
+<style scoped>
+.feed-switch {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+</style>
