@@ -1,8 +1,8 @@
 <template>
-  <div v-if="if_posts || feed_refreshing" id="feed">
-    <div v-if="feed_refreshing" id="loading-circle">
+  <div v-if="getPosts.length || getFeedRefreshing" id="feed">
+    <div v-if="getFeedRefreshing" id="loading-circle">
       <v-progress-circular
-        :value="feed_refreshing_progress"
+        :value="getFeedRefreshingProgress"
         size="300"
         width="15"
       >
@@ -11,7 +11,7 @@
     </div>
     <div v-else>
       <Post
-        v-for="post in posts"
+        v-for="post in getPosts"
         :key="post.link + post.feed_title"
         :title="post.title"
         :feed_title="post.feed_title"
@@ -36,58 +36,40 @@
 
 <script>
 import Post from "./Post.vue";
+import { mapGetters, mapActions } from "vuex";
 export default {
   name: "Feed",
-  props: {
-    posts: Array,
-    feed_refreshing: Boolean,
-    feed_refreshing_progress: Number,
-  },
   components: {
     Post,
   },
   computed: {
-    if_posts: function() {
-      return this.posts.length;
-    },
+    ...mapGetters([
+      "getLoadingMessages",
+      "getPosts",
+      "getFeedRefreshing",
+      "getFeedRefreshingProgress",
+    ]),
   },
   data: () => ({
-    loading_messages: [
-      "ooga booga...",
-      "raining packets...",
-      "blockchain intensifying...",
-      "loading NFT...",
-      "never gonna give you up...",
-      "never gonna let you down...",
-      "hailing aliens...",
-      "epic loading message...",
-      "proving P = NP...",
-      "killing zombies...",
-      "battling GPT4...",
-      "stealing the declaration of independence...",
-      "hacking the pentagon...",
-      "rewriting the linux kernel in rust...",
-      "responding to microsoft acquisition offers...",
-    ],
     loading_message: "refreshing...",
   }),
   watch: {
     feed_refreshing: function() {
-      this.loading_message = this.loading_messages[
-        Math.floor(Math.random() * this.loading_messages.length)
+      this.loading_message = this.getLoadingMessages[
+        Math.floor(Math.random() * this.getLoadingMessages.length)
       ];
     },
   },
   methods: {
-    handleAddProgrammerRSSFeed() {
-      let feeds_list = JSON.parse(localStorage.getItem("feeds")) || [];
-      feeds_list.push({
+    ...mapActions(["addNewFeed", "refreshPostsFromFeeds"]),
+    async handleAddProgrammerRSSFeed() {
+      const feed = {
         title: "Programmer Humor",
         url: "https://www.reddit.com/r/ProgrammerHumor/.rss",
         is_on: true,
-      });
-      localStorage.setItem("feeds", JSON.stringify(feeds_list));
-      this.$emit("refresh");
+      };
+      this.addNewFeed(feed);
+      await this.refreshPostsFromFeeds();
     },
   },
 };
