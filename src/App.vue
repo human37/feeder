@@ -2,14 +2,15 @@
   <div id="app">
     <v-app>
       <header>
-        <NavBar v-on:refreshRequest="refreshFeed" />
+        <NavBar ref="sidebar" @refreshRequest="refreshFeed" />
       </header>
-      <main>
-        <v-main>
+      <main style="height:100%">
+        <v-main style="height:100%">
           <Feed
             :posts="posts"
             :feed_refreshing="feed_refreshing"
             :feed_refreshing_progress="feed_refreshing_progress"
+            @refresh="refreshFeed"
           />
         </v-main>
       </main>

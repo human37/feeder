@@ -13,7 +13,7 @@
         <v-icon>mdi-refresh</v-icon>
       </v-btn>
     </v-list-item>
-    <v-divider></v-divider>
+    <v-divider v-if="items.length > 0"></v-divider>
     <v-list>
       <v-list-item v-for="item in items" :key="item.title" link>
         <v-switch

@@ -22,15 +22,16 @@
       />
     </div>
   </div>
-  <div v-else>
-    <div id="no-content">
-      no posts currently to see <v-icon>mdi-eye</v-icon> <br />
-      <br />
-      tap the <v-icon>mdi-rss</v-icon> button in order to add a feed <br />
-      <br />
-      and toggle <v-icon>mdi-toggle-switch</v-icon> feeds on the sidebar
-    </div>
-  </div>
+  <v-container style="height:100%" display="flex" v-else>
+    <v-row justify="center" class="mt-16">
+      No RSS feeds currently added, click below to add an example feed:
+    </v-row>
+    <v-row justify="center" class="mt-9">
+      <v-btn text outlined @click="handleAddProgrammerRSSFeed">
+        add programmer humor rss feed
+      </v-btn>
+    </v-row>
+  </v-container>
 </template>
 
 <script>
@@ -56,7 +57,6 @@ export default {
       "raining packets...",
       "blockchain intensifying...",
       "loading NFT...",
-      "finding your mother...",
       "never gonna give you up...",
       "never gonna let you down...",
       "hailing aliens...",
@@ -76,6 +76,18 @@ export default {
       this.loading_message = this.loading_messages[
         Math.floor(Math.random() * this.loading_messages.length)
       ];
+    },
+  },
+  methods: {
+    handleAddProgrammerRSSFeed() {
+      let feeds_list = JSON.parse(localStorage.getItem("feeds")) || [];
+      feeds_list.push({
+        title: "Programmer Humor",
+        url: "https://www.reddit.com/r/ProgrammerHumor/.rss",
+        is_on: true,
+      });
+      localStorage.setItem("feeds", JSON.stringify(feeds_list));
+      this.$emit("refresh");
     },
   },
 };
